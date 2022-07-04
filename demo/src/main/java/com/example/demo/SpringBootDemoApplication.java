@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.apache.juli.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -24,6 +25,7 @@ public class SpringBootDemoApplication {
 
 	@GetMapping("/hello")
 	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+		log.info("Accessing /hello page");
 		return String.format("Hello %s!", name);
 	}
 
@@ -35,6 +37,7 @@ public class SpringBootDemoApplication {
 	@Bean
 	public CommandLineRunner run(RestTemplate restTemplate) throws Exception {
 		return args -> {
+			log.info("Fetching api data");
 			Quote quote = restTemplate.getForObject(
 					"https://catfact.ninja/fact", Quote.class);
 			log.info(quote.toString());
